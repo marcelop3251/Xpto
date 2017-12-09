@@ -60,10 +60,10 @@ public class ArquivosController {
 				}
 				linha = bufferReader.readLine();
 				linhas.add(linha);
-				System.out.println("Adicionando linhas +" + linha);
+				//System.out.println("Adicionando linhas +" + linha);
 			}
 			linhas.parallelStream().forEach(e -> {
-				System.out.println("Processando  linha +" + e);
+				//System.out.println("Processando  linha +" + e);
 				String [] partesLinha = e.split(",");
 				Estado estado = estadoService.finByNome(partesLinha[1]);
 				if(estado == null){
