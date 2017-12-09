@@ -26,6 +26,11 @@ public class EstadoService {
 	public List<Estado> findAll(){
 		return estadoRepository.findAll();
 	}
+	
+	
+	public void deleteAll(){
+		estadoRepository.deleteAll();
+	}
 
 
 }

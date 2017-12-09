@@ -35,9 +35,4 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
 
 	Cidade  findFirstByOrderByIdIbgeDesc();
 
-	List<Cidade> findByNomeLike(String nome);
-
-	
-	
-
 }

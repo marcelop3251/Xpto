@@ -21,4 +21,8 @@ public class RegiaoService {
 		
 		return regiaoRepository.findByMicroRegionAndMesoRegion(micro,meso);
 	}
+	
+	public void deleteAll(){
+		regiaoRepository.deleteAll();
+	}
 }

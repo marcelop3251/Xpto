@@ -39,7 +39,7 @@ public class ArquivosController {
 	private CidadeService cidadeService;
 	
 	@RequestMapping(value ="/arquivo", method = RequestMethod.POST)
-	public void gravar(MultipartFile file) throws Exception{
+	public ModelAndView gravar(MultipartFile file) throws Exception{
 		
 		
 		System.out.println(file.getOriginalFilename());
@@ -94,6 +94,8 @@ public class ArquivosController {
 				
 				cidadeService.salvar(cidade);
 			});
+			
+			return new ModelAndView("Mensagem");
 	}
 	
 	@RequestMapping(value = "/arquivo" ,method = RequestMethod.GET)

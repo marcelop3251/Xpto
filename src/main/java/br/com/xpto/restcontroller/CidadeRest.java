@@ -76,11 +76,16 @@ public class CidadeRest {
 		return cidadeService.getRegistros();
 	}
 	
+	//12
 	@RequestMapping(value="/cidadesMaisDistantes", method = RequestMethod.GET)
-	public Double getCidadesMaisDistantes(){
+	public List<Cidade> getCidadesMaisDistantes(){
 		return cidadeService.getCidadesMaisDistantes();
 	}
 	
 	
+	@RequestMapping(value="/reiniciar", method = RequestMethod.GET)
+	public String reiniciarAplicacao(){
+		return cidadeService.reinicar();
+	}
 
 }

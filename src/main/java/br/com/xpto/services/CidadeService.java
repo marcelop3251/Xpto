@@ -11,6 +11,7 @@ import br.com.xpto.entidades.Capital;
 import br.com.xpto.entidades.Cidade;
 import br.com.xpto.entidades.auxiliares.EstadoAndQuantidadeDeCidades;
 import br.com.xpto.repository.CidadeRepository;
+import br.com.xpto.repository.EstadoRepositoy;
 import br.com.xpto.repository.myrepository.CidadesRepository;
 
 @Service
@@ -22,6 +23,13 @@ public class CidadeService {
 	
 	@Autowired
 	private CidadesRepository customRepository;
+	
+	@Autowired
+	private EstadoService estadoService;
+	
+	
+	@Autowired
+	private RegiaoService regiaoService;
 	
 	
 	public Cidade salvar(Cidade cidade){
@@ -72,13 +80,11 @@ public class CidadeService {
 	 * @return
 	 * 		Uma cidade
 	 */
-	public Cidade findByCidadeByIdIbge(Integer idIbge) {
-		
+	public Cidade findByCidadeByIdIbge(Integer idIbge) {		
 		return cidadeRepository.findByIdIbge(idIbge);
 	}
 
-	public List<String> findByEstado(String estado) {
-		
+	public List<String> findByEstado(String estado) {		
 		return cidadeRepository.findByEstado(estado);
 	}
 
@@ -95,8 +101,7 @@ public class CidadeService {
 
 	@Transactional
 	public void deleteCidade(Integer idIbge) {
-		cidadeRepository.delete(idIbge);
-		
+		cidadeRepository.delete(idIbge);		
 	}
 	
 	public List<Cidade> getDados(String coluna, String conteudo){
@@ -122,38 +127,31 @@ public class CidadeService {
 		return cidadeRepository.count();
 	}
 
-	public Double getCidadesMaisDistantes() {
-		List<Cidade> first10 = cidadeRepository.findByNomeLike("%abadia%");
-		Cidade c1 = first10.get(0);
-		Cidade c2 = first10.get(1);
+	public List<Cidade> getCidadesMaisDistantes() {
+		List<Cidade> cidadeList = cidadeRepository.findAll();
 		
-		return CalculaDistancia(c1.getLatitude(),c1.getLongitude(), c2.getLatitude(), c2.getLongitude());
+		Cidade cidade1Encontrada= null;
+		Cidade cidad2Encontrada = null;
+		
+		double distanciaAtual,distanciaAnterior = 0;
+		
+		for(int i = 0; i < cidadeList.size(); i++){
+			Cidade cidade1 = cidadeList.get(i);
+			for(int j = i+1; j < cidadeList.size(); j++){
+				Cidade cidade2 = cidadeList.get(j);
+				distanciaAtual = calculaDistancia(cidade1.getLatitude(), cidade1.getLongitude(), cidade2.getLatitude(), cidade2.getLongitude());
+				if(distanciaAtual > distanciaAnterior){
+					cidade1Encontrada = cidade1;
+					cidad2Encontrada = cidade2;
+				}
+			}
+		}
+		return Arrays.asList(cidade1Encontrada,cidad2Encontrada);
 	}
 	
 	
-	private Double CalculaDistancia(double lat1, double long1, double lat2, double long2){
-		
-
-/* esse algorítimo é valido		
+	private Double calculaDistancia(double lat1, double long1, double lat2, double long2){
 		double raioDaTerra = 6371.0;
-		double theta = long2 - long1;
-		double thetaLong= long2 - long1;
-		double thetaLat = lat2 - lat1;
-		double dist = Math.sin(degForRad(lat1)) * Math.sin(degForRad(lat2)) + Math.cos(degForRad(lat1)) * Math.cos(degForRad(lat2)) * Math.cos(degForRad(theta));
-		dist = Math.acos(dist);
-		dist = radForDeg(dist);
-		dist = dist * 60 * 1.1515*1.609344;
-		*/
-		
-	/*	dlon = lon2 - lon1 
-				dlat = lat2 - lat1 
-				a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2 
-				c = 2 * atan2( sqrt(a), sqrt(1-a) ) 
-				d = R * c (where R is the radius of the Earth)
-	 */
-		
-		double raioDaTerra = 6371.0;
-		double theta = long2 - long1;
 		double thetaLong= long2 - long1;
 		double thetaLat = lat2 - lat1;
 		double dist = Math.pow(Math.sin(degForRad(thetaLat/2)),2) + 
@@ -167,8 +165,13 @@ public class CidadeService {
 		return (deg * Math.PI / 180.0);
 	}
 	
-	private double radForDeg(double rad) {
-		return (rad * 180 / Math.PI);
+
+	public String reinicar() {
+		cidadeRepository.deleteAll();
+		estadoService.deleteAll();
+		regiaoService.deleteAll();		 
+		return "Banco de dados deletado com sucesso";
+		
 	}
 	
 }
