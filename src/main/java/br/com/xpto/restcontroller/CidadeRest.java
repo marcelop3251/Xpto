@@ -19,35 +19,35 @@ public class CidadeRest {
 	@Autowired
 	private CidadeService cidadeService;
 
-	@RequestMapping(value="/cidadeCapitais", method = RequestMethod.GET)
+	@RequestMapping(value="cidadeCapitais", method = RequestMethod.GET)
 	public List<Cidade> cidadePorNomeOrdenado(){
 		return cidadeService.getCidadeCapitalOrdemByNome(Capital.SIM);
 	}
 	
-	@RequestMapping(value="/estadoMaiorMenor", method = RequestMethod.GET)
+	@RequestMapping(value="estadoMaiorMenor", method = RequestMethod.GET)
 	public List<EstadoAndQuantidadeDeCidades> getEstadoMaiorMenor(){
 		return cidadeService.findEstadoMaiorMenor();
 	}
 	
-	@RequestMapping(value="/cidadesPorEstado", method = RequestMethod.GET)
+	@RequestMapping(value="cidadesPorEstado", method = RequestMethod.GET)
 	public List<EstadoAndQuantidadeDeCidades> getCidadesPorEstado(){
 		return cidadeService.findcidadesPorEstado();
 	}
 	
-	@RequestMapping(value="/cidade/{idIbge}", method = RequestMethod.GET)
+	@RequestMapping(value="cidade/{idIbge}", method = RequestMethod.GET)
 	public Cidade getCidade(@PathVariable(value = "idIbge") Integer idIbge){
 		return  cidadeService.findByCidadeByIdIbge(idIbge);
 		
 	}
 	
-	@RequestMapping(value="/cidadePorEstado/{estado}", method = RequestMethod.GET)
+	@RequestMapping(value="cidadePorEstado/{estado}", method = RequestMethod.GET)
 	public List<String> getNomeCidade(@PathVariable(value = "estado") String estado){
 		return  cidadeService.findByEstado(estado);
 		
 	}
 	
 	
-	@RequestMapping(value="/adicionarCidade", method = RequestMethod.POST)
+	@RequestMapping(value="adicionarCidade", method = RequestMethod.POST)
 	public Cidade addCidade(@RequestBody Cidade cidade){
 		return  cidadeService.adicionarCidade(cidade);
 		
@@ -59,31 +59,31 @@ public class CidadeRest {
 	}
 	
 	//9
-	@RequestMapping(value="/cidade/{coluna}/{conteudo}", method = RequestMethod.GET)
+	@RequestMapping(value="cidade/{coluna}/{conteudo}", method = RequestMethod.GET)
 	public List<Cidade> getCidadePorColunaAndConteudo(@PathVariable(value = "coluna") String coluna,@PathVariable(value = "conteudo") String conteudo){
 		return cidadeService.getDados(coluna, conteudo);
 	}
 	
 	//10
-	@RequestMapping(value="/count/{coluna}", method = RequestMethod.GET)
+	@RequestMapping(value="count/{coluna}", method = RequestMethod.GET)
 	public Long geRegistrosPorColuna(@PathVariable(value = "coluna") String coluna){
 		return cidadeService.getRegistrosPorColuna(coluna);
 	}
 	
 	//11
-	@RequestMapping(value="/countRegistros", method = RequestMethod.GET)
+	@RequestMapping(value="countRegistros", method = RequestMethod.GET)
 	public Long geRegistros(){
 		return cidadeService.getRegistros();
 	}
 	
 	//12
-	@RequestMapping(value="/cidadesMaisDistantes", method = RequestMethod.GET)
+	@RequestMapping(value="cidadesMaisDistantes", method = RequestMethod.GET)
 	public List<Cidade> getCidadesMaisDistantes(){
 		return cidadeService.getCidadesMaisDistantes();
 	}
 	
 	
-	@RequestMapping(value="/reiniciar", method = RequestMethod.GET)
+	@RequestMapping(value="reiniciar", method = RequestMethod.GET)
 	public String reiniciarAplicacao(){
 		return cidadeService.reinicar();
 	}

@@ -60,10 +60,10 @@ public class ArquivosController {
 				}
 				linha = bufferReader.readLine();
 				linhas.add(linha);
-				
+				System.out.println("Adicionando linhas +" + linha);
 			}
 			linhas.parallelStream().forEach(e -> {
-				
+				System.out.println("Processando  linha +" + e);
 				String [] partesLinha = e.split(",");
 				Estado estado = estadoService.finByNome(partesLinha[1]);
 				if(estado == null){
@@ -95,12 +95,17 @@ public class ArquivosController {
 				cidadeService.salvar(cidade);
 			});
 			
-			return new ModelAndView("Mensagem");
+			return new ModelAndView("redirect: /mensagem");
 	}
 	
 	@RequestMapping(value = "/arquivo" ,method = RequestMethod.GET)
 	public ModelAndView arquivo(){
 		return new ModelAndView("Arquivo");
+	}
+	
+	@RequestMapping(value = "/mensagem" ,method = RequestMethod.GET)
+	public ModelAndView mensagem(){
+		return new ModelAndView("Mensagem");
 	}
 	
 }
