@@ -53,7 +53,7 @@ public class CidadeRest {
 		
 	}
 	
-	@RequestMapping(value="/cidade/{idIbge}", method = RequestMethod.DELETE)
+	@RequestMapping(value="cidade/{idIbge}", method = RequestMethod.DELETE)
 	public void deleteCidade(@PathVariable(value = "idIbge") Integer idIbge){
 		cidadeService.deleteCidade(idIbge);
 	}
