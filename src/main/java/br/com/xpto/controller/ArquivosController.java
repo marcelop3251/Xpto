@@ -44,7 +44,7 @@ public class ArquivosController {
 		
 		System.out.println(file.getOriginalFilename());
 		
-		//String path = fileSaver.write("Arquivos-csv", file);
+		fileSaver.write("Arquivos-csv", file);
 		
 		Optional<BufferedReader> bf = Optional.ofNullable(new BufferedReader(new InputStreamReader(file.getInputStream(),"utf-8")));
 		

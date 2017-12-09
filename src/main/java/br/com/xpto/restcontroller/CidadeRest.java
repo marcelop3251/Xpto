@@ -19,6 +19,7 @@ public class CidadeRest {
 	@Autowired
 	private CidadeService cidadeService;
 
+	//1
 	@RequestMapping(value="cidadeCapitais", method = RequestMethod.GET)
 	public List<Cidade> cidadePorNomeOrdenado(){
 		return cidadeService.getCidadeCapitalOrdemByNome(Capital.SIM);
