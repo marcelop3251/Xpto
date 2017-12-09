@@ -62,7 +62,7 @@ public class ArquivosController {
 				linhas.add(linha);
 				//System.out.println("Adicionando linhas +" + linha);
 			}
-			linhas.parallelStream().forEach(e -> {
+			linhas.forEach(e -> {
 				//System.out.println("Processando  linha +" + e);
 				String [] partesLinha = e.split(",");
 				Estado estado = estadoService.finByNome(partesLinha[1]);
